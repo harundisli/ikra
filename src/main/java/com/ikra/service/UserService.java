@@ -4,4 +4,5 @@ import com.ikra.model.User;
 
 public interface UserService {
     User getUserByUserName(String userName) ;
+    User saveNewUser(User newUser);
 }
