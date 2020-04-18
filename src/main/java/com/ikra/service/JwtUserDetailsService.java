@@ -15,14 +15,14 @@ public class JwtUserDetailsService implements UserDetailsService {
 	@Autowired
 	UserRepository userRepository;
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		com.ikra.model.User user =  userRepository.findByUsername(username);
+	public UserDetails loadUserByUsername(String emailAsUserName) throws UsernameNotFoundException {
+		com.ikra.model.User user =  userRepository.findByEmail(emailAsUserName);
 
 		if (user!= null) {
-			return new User(user.getUsername(), user.getPassword(),
+			return new User(user.getEmail(), user.getPassword(),
 					new ArrayList<>());
 		} else {
-			throw new UsernameNotFoundException("User not found with username: " + username);
+			throw new UsernameNotFoundException("User not found with username: " + emailAsUserName);
 		}
 	}
 
