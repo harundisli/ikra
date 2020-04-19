@@ -19,6 +19,9 @@ public class User {
     Long id;
 
     @NotNull
+    @Column(name = "full_name")
+    String fullName;
+
     @Column(name = "name")
     String name;
 

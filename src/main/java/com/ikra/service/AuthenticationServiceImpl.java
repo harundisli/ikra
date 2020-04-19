@@ -1,43 +1,44 @@
-package com.ikra.controller;
+package com.ikra.service;
 
-
+import com.ikra.config.JwtTokenUtil;
 import com.ikra.dto.UserDTO;
-import com.ikra.service.AuthenticationService;
+import com.ikra.model.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
-
-@RestController
-@CrossOrigin
-public class JwtAuthenticationController {
+@Service
+public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
-    private AuthenticationService authenticationService;
+    private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
+    @Autowired
+    private JwtUserDetailsService jwtUserDetailsService;
 
-    @PostMapping(path = "api/authenticate")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody UserDTO authenticationRequest)
-            throws Exception {
+    @Override
+    public JwtResponse authenticate(UserDTO authenticationRequest) throws Exception{
 
-       return ResponseEntity.ok( authenticationService.authenticate(authenticationRequest));
-/*
         authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
+
         final UserDetails userDetails = jwtUserDetailsService
                 .loadUserByUsername(authenticationRequest.getEmail());
 
         final String token = jwtTokenUtil.generateToken(userDetails);
 
-        return ResponseEntity.ok(new JwtResponse(token));
-
- */
+        return new JwtResponse(token);
     }
 
-   /* private void authenticate(String emailAsUserName, String password) throws Exception {
+
+
+    private void authenticate(String emailAsUserName, String password) throws Exception {
         //Objects.requireNonNull(username);
         //Objects.requireNonNull(password);
         if(emailAsUserName!=null && password!=null) {
@@ -53,5 +54,5 @@ public class JwtAuthenticationController {
         }
 
 
-    }*/
+    }
 }

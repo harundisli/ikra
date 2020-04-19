@@ -12,8 +12,8 @@ import javax.validation.constraints.Size;
 public class UserDTO {
 
     @NotNull
-    @Size(min = 1/*, message = "{Size.userDto.firstName}"*/)
-    private String name;
+    @Size(min = 1/*, message = "{Size.userDto.fullName}"*/)
+    private String fullName;
 
 /*    @NotNull
     @Size(min = 1, message = "{Size.userDto.lastName}")
